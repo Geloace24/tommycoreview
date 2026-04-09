@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TommyCo Coffee Shop - Feedback</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5e6d3;
+      color: #4a3728;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      width: 100%;
+      background-color: #6b4226;
+      color: #f5e6d3;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      letter-spacing: 2px;
+      margin-bottom: 0.3rem;
+    }
+
+    header p {
+      font-size: 1rem;
+      opacity: 0.85;
+    }
+
+    main {
+      width: 100%;
+      max-width: 680px;
+      padding: 2rem 1.2rem 3rem;
+    }
+
+    .intro {
+      text-align: center;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    .section-card {
+      background-color: #fff8f0;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 8px rgba(107, 66, 38, 0.08);
+    }
+
+    .section-card h2 {
+      font-size: 1.15rem;
+      margin-bottom: 1rem;
+      color: #6b4226;
+      border-bottom: 2px solid #e8d5c0;
+      padding-bottom: 0.5rem;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+      font-size: 0.9rem;
+    }
+
+    .field {
+      margin-bottom: 1rem;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 0.65rem 0.8rem;
+      border: 1px solid #d4c4b0;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      background: #fffdf9;
+      color: #4a3728;
+      transition: border-color 0.2s;
+    }
+
+    input[type="text"]:focus,
+    input[type="date"]:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: #6b4226;
+      box-shadow: 0 0 0 2px rgba(107, 66, 38, 0.15);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    /* Anonymous toggle */
+    .name-group {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-end;
+    }
+
+    .name-group .field {
+      flex: 1;
+    }
+
+    .anon-btn {
+      padding: 0.65rem 1rem;
+      border: 2px solid #6b4226;
+      background: transparent;
+      color: #6b4226;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+      margin-bottom: 1rem;
+      height: fit-content;
+    }
+
+    .anon-btn:hover {
+      background: #6b4226;
+      color: #f5e6d3;
+    }
+
+    .anon-btn.active {
+      background: #6b4226;
+      color: #f5e6d3;
+    }
+
+    /* Star rating */
+    .star-rating {
+      display: flex;
+      gap: 0.3rem;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+      margin-bottom: 0.5rem;
+    }
+
+    .star-rating input {
+      display: none;
+    }
+
+    .star-rating label {
+      font-size: 1.8rem;
+      color: #d4c4b0;
+      cursor: pointer;
+      transition: color 0.15s;
+      margin-bottom: 0;
+      font-weight: normal;
+    }
+
+    .star-rating label:hover,
+    .star-rating label:hover ~ label,
+    .star-rating input:checked ~ label {
+      color: #c8872b;
+    }
+
+    /* Recommend */
+    .recommend-group {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .recommend-group label {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-weight: normal;
+      cursor: pointer;
+    }
+
+    .recommend-group input[type="radio"] {
+      accent-color: #6b4226;
+      width: 1.1rem;
+      height: 1.1rem;
+    }
+
+    /* Submit */
+    .submit-btn {
+      display: block;
+      width: 100%;
+      padding: 0.9rem;
+      background-color: #6b4226;
+      color: #f5e6d3;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+      letter-spacing: 0.5px;
+    }
+
+    .submit-btn:hover {
+      background-color: #7d5133;
+    }
+
+    .submit-btn:active {
+      transform: scale(0.99);
+    }
+
+    /* Success message */
+    .success-message {
+      display: none;
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      background: #fff8f0;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(107, 66, 38, 0.08);
+    }
+
+    .success-message.show {
+      display: block;
+    }
+
+    .success-message h2 {
+      color: #6b4226;
+      margin-bottom: 0.75rem;
+      font-size: 1.5rem;
+    }
+
+    .success-message p {
+      color: #7d5133;
+      line-height: 1.6;
+    }
+
+    .success-message .reset-btn {
+      margin-top: 1.5rem;
+      padding: 0.6rem 1.5rem;
+      background: #6b4226;
+      color: #f5e6d3;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .success-message .reset-btn:hover {
+      background: #7d5133;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.8rem;
+      opacity: 0.6;
+    }
+
+    /* Responsive */
+    @media (max-width: 500px) {
+      header h1 {
+        font-size: 1.6rem;
+      }
+
+      main {
+        padding: 1.2rem 0.8rem 2rem;
+      }
+
+      .name-group {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .anon-btn {
+        width: 100%;
+        text-align: center;
+      }
+
+      .star-rating label {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>TommyCo</h1>
+    <p>We value your feedback</p>
+  </header>
+
+  <main>
+    <p class="intro">
+      Thank you for visiting TommyCo! Your honest feedback helps us improve.
+      All responses are completely anonymous.
+    </p>
+
+    <form id="feedback-form" name="tommyco-feedback" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="tommyco-feedback" />
+      <p hidden><label>Don't fill this out: <input name="bot-field" /></label></p>
+
+      <!-- Your Name -->
+      <div class="section-card">
+        <h2>About You</h2>
+        <div class="name-group">
+          <div class="field">
+            <label for="name">Name (optional)</label>
+            <input type="text" id="name" name="name" placeholder="Your name" />
+          </div>
+          <button type="button" class="anon-btn" id="anon-toggle">Anonymous</button>
+        </div>
+        <div class="field">
+          <label for="visit-date">Date of Visit</label>
+          <input type="date" id="visit-date" name="visit-date" />
+        </div>
+      </div>
+
+      <!-- Staff Feedback -->
+      <div class="section-card">
+        <h2>Staff Service</h2>
+        <div class="field">
+          <label>How would you rate our staff?</label>
+          <div class="star-rating">
+            <input type="radio" id="staff-5" name="staff-rating" value="5" /><label for="staff-5">&#9733;</label>
+            <input type="radio" id="staff-4" name="staff-rating" value="4" /><label for="staff-4">&#9733;</label>
+            <input type="radio" id="staff-3" name="staff-rating" value="3" /><label for="staff-3">&#9733;</label>
+            <input type="radio" id="staff-2" name="staff-rating" value="2" /><label for="staff-2">&#9733;</label>
+            <input type="radio" id="staff-1" name="staff-rating" value="1" /><label for="staff-1">&#9733;</label>
+          </div>
+        </div>
+        <div class="field">
+          <label for="staff-comment">Tell us more about your experience with our staff</label>
+          <textarea id="staff-comment" name="staff-comment" placeholder="How did our staff treat you?"></textarea>
+        </div>
+      </div>
+
+      <!-- Drinks Feedback -->
+      <div class="section-card">
+        <h2>Drinks</h2>
+        <div class="field">
+          <label>How would you rate our drinks?</label>
+          <div class="star-rating">
+            <input type="radio" id="drinks-5" name="drinks-rating" value="5" /><label for="drinks-5">&#9733;</label>
+            <input type="radio" id="drinks-4" name="drinks-rating" value="4" /><label for="drinks-4">&#9733;</label>
+            <input type="radio" id="drinks-3" name="drinks-rating" value="3" /><label for="drinks-3">&#9733;</label>
+            <input type="radio" id="drinks-2" name="drinks-rating" value="2" /><label for="drinks-2">&#9733;</label>
+            <input type="radio" id="drinks-1" name="drinks-rating" value="1" /><label for="drinks-1">&#9733;</label>
+          </div>
+        </div>
+        <div class="field">
+          <label for="drinks-ordered">What did you order?</label>
+          <input type="text" id="drinks-ordered" name="drinks-ordered" placeholder="e.g. Iced Latte, Cappuccino" />
+        </div>
+        <div class="field">
+          <label for="drinks-comment">Any comments about the drinks?</label>
+          <textarea id="drinks-comment" name="drinks-comment" placeholder="Share your thoughts on the taste, presentation, etc."></textarea>
+        </div>
+      </div>
+
+      <!-- Ambience Feedback -->
+      <div class="section-card">
+        <h2>Ambience</h2>
+        <div class="field">
+          <label>How would you rate the ambience?</label>
+          <div class="star-rating">
+            <input type="radio" id="ambience-5" name="ambience-rating" value="5" /><label for="ambience-5">&#9733;</label>
+            <input type="radio" id="ambience-4" name="ambience-rating" value="4" /><label for="ambience-4">&#9733;</label>
+            <input type="radio" id="ambience-3" name="ambience-rating" value="3" /><label for="ambience-3">&#9733;</label>
+            <input type="radio" id="ambience-2" name="ambience-rating" value="2" /><label for="ambience-2">&#9733;</label>
+            <input type="radio" id="ambience-1" name="ambience-rating" value="1" /><label for="ambience-1">&#9733;</label>
+          </div>
+        </div>
+        <div class="field">
+          <label for="ambience-comment">Any comments about the ambience?</label>
+          <textarea id="ambience-comment" name="ambience-comment" placeholder="Music, seating, cleanliness, vibe..."></textarea>
+        </div>
+      </div>
+
+      <!-- Overall -->
+      <div class="section-card">
+        <h2>Overall</h2>
+        <div class="field">
+          <label for="overall">Any other feedback or suggestions?</label>
+          <textarea id="overall" name="overall" placeholder="Anything else you'd like us to know?"></textarea>
+        </div>
+        <div class="field">
+          <label>Would you recommend TommyCo to a friend?</label>
+          <div class="recommend-group">
+            <label><input type="radio" name="would-recommend" value="Yes" /> Yes</label>
+            <label><input type="radio" name="would-recommend" value="Maybe" /> Maybe</label>
+            <label><input type="radio" name="would-recommend" value="No" /> No</label>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn">Submit Feedback</button>
+    </form>
+
+    <div class="success-message" id="success">
+      <h2>Thank you!</h2>
+      <p>Your feedback has been submitted anonymously. We truly appreciate you helping TommyCo improve.</p>
+      <button type="button" class="reset-btn" id="reset-btn">Submit Another Response</button>
+    </div>
+  </main>
+
+  <footer>TommyCo Coffee Shop &copy; 2026</footer>
+
+  <script>
+    const form = document.getElementById('feedback-form');
+    const nameInput = document.getElementById('name');
+    const anonBtn = document.getElementById('anon-toggle');
+    const successDiv = document.getElementById('success');
+    const resetBtn = document.getElementById('reset-btn');
+
+    // Set today's date as default
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('visit-date').value = today;
+
+    // Anonymous toggle
+    anonBtn.addEventListener('click', function () {
+      if (this.classList.contains('active')) {
+        this.classList.remove('active');
+        nameInput.disabled = false;
+        nameInput.value = '';
+        nameInput.placeholder = 'Your name';
+      } else {
+        this.classList.add('active');
+        nameInput.value = 'Anonymous';
+        nameInput.disabled = true;
+      }
+    });
+
+    // AJAX form submission
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      // If name is empty, set to Anonymous
+      if (!nameInput.value.trim()) {
+        nameInput.disabled = false;
+        nameInput.value = 'Anonymous';
+      }
+
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(formData).toString()
+        });
+
+        if (response.ok) {
+          form.style.display = 'none';
+          successDiv.classList.add('show');
+        } else {
+          alert('Something went wrong. Please try again.');
+        }
+      } catch (err) {
+        alert('Could not submit. Please check your connection and try again.');
+      }
+    });
+
+    // Reset form
+    resetBtn.addEventListener('click', function () {
+      form.reset();
+      nameInput.disabled = false;
+      nameInput.placeholder = 'Your name';
+      anonBtn.classList.remove('active');
+      document.getElementById('visit-date').value = today;
+      form.style.display = 'block';
+      successDiv.classList.remove('show');
+    });
+  </script>
+</body>
+</html>
