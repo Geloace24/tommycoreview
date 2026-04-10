@@ -20,6 +20,9 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     }
 
     header {
@@ -28,11 +31,16 @@
       color: #f5e6d3;
       text-align: center;
       padding: 2rem 1rem;
-      
+      border-bottom-right-radius: 20px;
+      border-bottom-left-radius: 20px;      
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     }
 
     img {
     border-radius: 10px;
+    width: 20%;
+    height: 20%;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 
     }
 
@@ -302,7 +310,7 @@
 <body>
 
   <header>
-    <img src="coffee-bg.jpg.jpg" alt="Logo" width="80">
+    <img src="coffee-bg.jpg.jpg" alt="Logo" >
     <h1>TommyCo.</h1>
     <p>We value your feedback</p>
   </header>
@@ -421,7 +429,7 @@
     </div>
   </main>
 
-  <footer>TommyCo Coffee Shop &copy; 2026</footer>
+  <footer>TommyCo. &copy; 2026</footer>
 
   <script>
     const form = document.getElementById('feedback-form');
