@@ -325,6 +325,8 @@
     
     <form action="https://formspree.io/f/xvzvjayw" method="POST">
 
+      <input type="hidden" name="_redirect" value="thankyou.html" />
+
       <input type="hidden" name="form-name" value="tommyco-feedback" />
       <p hidden><label>Don't fill this out: <input name="bot-field" /></label></p>
 
@@ -435,7 +437,6 @@
     </form>
 
 
-
   </main>
 
   <footer>TommyCo. &copy; 2026</footer>
@@ -505,6 +506,8 @@
       form.style.display = 'block';
       successDiv.classList.remove('show');
     });
+
+    
   </script>
 </body>
 </html>
