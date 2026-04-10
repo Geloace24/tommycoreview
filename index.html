@@ -308,6 +308,8 @@
   </style>
 </head>
 <body>
+  
+  
 
   <header>
     <img src="coffee-bg.jpg.jpg" alt="Logo" >
@@ -320,8 +322,9 @@
       Thank you for visiting TommyCo! Your honest feedback helps us improve.
       All responses are completely anonymous.
     </p>
+    
+    <form action="https://formspree.io/f/xvzvjayw" method="POST">
 
-    <form id="feedback-form" name="tommyco-feedback" method="POST" data-netlify="true" netlify-honeypot="bot-field">
       <input type="hidden" name="form-name" value="tommyco-feedback" />
       <p hidden><label>Don't fill this out: <input name="bot-field" /></label></p>
 
@@ -419,14 +422,20 @@
         </div>
       </div>
 
-      <button type="submit" class="submit-btn">Submit Feedback</button>
-    </form>
+      
 
+      <button type="submit" class="submit-btn">Submit Feedback</button>
+    
     <div class="success-message" id="success">
       <h2>Thank you!</h2>
       <p>Your feedback has been submitted anonymously. We truly appreciate you helping TommyCo improve.</p>
       <button type="button" class="reset-btn" id="reset-btn">Submit Another Response</button>
     </div>
+
+    </form>
+
+
+
   </main>
 
   <footer>TommyCo. &copy; 2026</footer>
