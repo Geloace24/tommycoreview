@@ -323,7 +323,7 @@
       All responses are completely anonymous.
     </p>
     
-    <form action="https://formspree.io/f/xvzvjayw" method="POST">
+    <form id="myForm"action="https://formspree.io/f/xvzvjayw" method="POST">
 
 
       <input type="hidden" name="form-name" value="tommyco-feedback" />
@@ -507,9 +507,9 @@
     });
 
     
-document.getElementById("myForm").addEventListener("submit", function() {
+form.addEventListener("submit", function() {
   setTimeout(function() {
-    window.location.href = "thankyou.html";
+    window.location.href = "thank-you.html";
   }, 1000);
 });
 </script>
