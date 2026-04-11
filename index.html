@@ -162,7 +162,7 @@
     }
 
     /* Star rating */
-    .star-rating {
+    .ambience-rating {
       display: flex;
       gap: 0.3rem;
       flex-direction: row-reverse;
@@ -170,11 +170,11 @@
       margin-bottom: 0.5rem;
     }
 
-    .star-rating input {
+    .ambience-rating input {
       display: none;
     }
 
-    .star-rating label {
+    .ambience-rating label {
       font-size: 1.8rem;
       color: #d4c4b0;
       cursor: pointer;
@@ -183,9 +183,63 @@
       font-weight: normal;
     }
 
-    .star-rating label:hover,
-    .star-rating label:hover ~ label,
-    .star-rating input:checked ~ label {
+    .ambience-rating label:hover,
+    .ambience-rating label:hover ~ label,
+    .ambience-rating input:checked ~ label {
+      color: #c8872b;
+    }
+
+     .drinks-rating {
+      display: flex;
+      gap: 0.3rem;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+      margin-bottom: 0.5rem;
+    }
+
+    .drinks-rating input {
+      display: none;
+    }
+
+    .drinks-rating label {
+      font-size: 1.8rem;
+      color: #d4c4b0;
+      cursor: pointer;
+      transition: color 0.15s;
+      margin-bottom: 0;
+      font-weight: normal;
+    }
+
+    .drinks-rating label:hover,
+    .drinks-rating label:hover ~ label,
+    .drinks-rating input:checked ~ label {
+      color: #c8872b;
+    }
+
+     .staff-rating {
+      display: flex;
+      gap: 0.3rem;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+      margin-bottom: 0.5rem;
+    }
+
+    .staff-rating input {
+      display: none;
+    }
+
+    .staff-rating label {
+      font-size: 1.8rem;
+      color: #d4c4b0;
+      cursor: pointer;
+      transition: color 0.15s;
+      margin-bottom: 0;
+      font-weight: normal;
+    }
+
+    .staff-rating label:hover,
+    .staff-rating label:hover ~ label,
+    .staff-rating input:checked ~ label {
       color: #c8872b;
     }
 
@@ -301,7 +355,15 @@
         text-align: center;
       }
 
-      .star-rating label {
+      .staff-rating label {
+        font-size: 2rem;
+      }
+
+      .drinks-rating label {
+        font-size: 2rem;
+      }
+
+      .ambience-rating label {
         font-size: 2rem;
       }
     }
@@ -323,7 +385,7 @@
       All responses are completely anonymous.
     </p>
     
-    <form id="feedback-form"action="https://formspree.io/f/xvzvjayw" method="POST">
+    <form id="Tommyreviews">
 
 
       <input type="hidden" name="form-name" value="tommyco-feedback" />
@@ -350,7 +412,7 @@
         <h2>Staff Service</h2>
         <div class="field">
           <label>How would you rate our staff?</label>
-          <div class="star-rating">
+          <div class="staff-rating">
             <input type="radio" id="staff-5" name="staff-rating" value="5" /><label for="staff-5">&#9733;</label>
             <input type="radio" id="staff-4" name="staff-rating" value="4" /><label for="staff-4">&#9733;</label>
             <input type="radio" id="staff-3" name="staff-rating" value="3" /><label for="staff-3">&#9733;</label>
@@ -369,7 +431,7 @@
         <h2>Drinks</h2>
         <div class="field">
           <label>How would you rate our drinks?</label>
-          <div class="star-rating">
+          <div class="drinks-rating">
             <input type="radio" id="drinks-5" name="drinks-rating" value="5" /><label for="drinks-5">&#9733;</label>
             <input type="radio" id="drinks-4" name="drinks-rating" value="4" /><label for="drinks-4">&#9733;</label>
             <input type="radio" id="drinks-3" name="drinks-rating" value="3" /><label for="drinks-3">&#9733;</label>
@@ -392,7 +454,7 @@
         <h2>Ambience</h2>
         <div class="field">
           <label>How would you rate the ambience?</label>
-          <div class="star-rating">
+          <div class="ambience-rating">
             <input type="radio" id="ambience-5" name="ambience-rating" value="5" /><label for="ambience-5">&#9733;</label>
             <input type="radio" id="ambience-4" name="ambience-rating" value="4" /><label for="ambience-4">&#9733;</label>
             <input type="radio" id="ambience-3" name="ambience-rating" value="3" /><label for="ambience-3">&#9733;</label>
@@ -438,83 +500,89 @@
 
   </main>
 
-  <footer>TommyCo. &copy; 2026</footer>
+  <footer>TommyCo. &copy; 2026</footer> 
+  
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
   <script>
-    const form = document.getElementById('feedback-form');
-    const nameInput = document.getElementById('name');
-    const anonBtn = document.getElementById('anon-toggle');
-    const successDiv = document.getElementById('success');
-    const resetBtn = document.getElementById('reset-btn');
 
-    // Set today's date as default
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('visit-date').value = today;
+    const supabaseClient = supabase.createClient(
+  "https://cjylqadgpvaqsupuhpmw.supabase.co",
+  "YOUR-ANON-KEY"
+  );
 
-    // Anonymous toggle
-    anonBtn.addEventListener('click', function () {
-      if (this.classList.contains('active')) {
-        this.classList.remove('active');
-        nameInput.disabled = false;
-        nameInput.value = '';
-        nameInput.placeholder = 'Your name';
-      } else {
-        this.classList.add('active');
-        nameInput.value = 'Anonymous';
-        nameInput.disabled = true;
-      }
-    });
+const form = document.getElementById('Tommyreviews');
+const nameInput = document.getElementById('name');
+const anonBtn = document.getElementById('anon-toggle');
+const successDiv = document.getElementById('success');
+const resetBtn = document.getElementById('reset-btn');
 
-    // AJAX form submission
-    form.addEventListener('submit', async function (e) {
-      e.preventDefault();
+// default date
+const today = new Date().toISOString().split('T')[0];
+document.getElementById('visit-date').value = today;
 
-      // If name is empty, set to Anonymous
-      if (!nameInput.value.trim()) {
-        nameInput.disabled = false;
-        nameInput.value = 'Anonymous';
-      }
-
-      const formData = new FormData(form);
-
-      try {
-        const response = await fetch('https://formspree.io/f/xvzvjayw', {
-  method: 'POST',
-  headers: { 
-    'Content-Type': 'application/x-www-form-urlencoded',
-    'Accept': 'application/json'   // ⭐ THIS IS THE FIX
-  },
-  body: new URLSearchParams(formData).toString()
+// anonymous toggle
+anonBtn.addEventListener('click', function () {
+  if (this.classList.contains('active')) {
+    this.classList.remove('active');
+    nameInput.disabled = false;
+    nameInput.value = '';
+  } else {
+    this.classList.add('active');
+    nameInput.value = 'Anonymous';
+    nameInput.disabled = true;
+  }
 });
 
-        if (response.ok) {
-          form.style.display = 'none';
-          successDiv.classList.add('show');
-        } else {
-          alert('Something went wrong. Please try again.');
-        }
-      } catch (err) {
-        alert('Could not submit. Please check your connection and try again.');
-      }
-    });
+// SUBMIT
+form.addEventListener('submit', async function (e) {
+  e.preventDefault();
 
-    // Reset form
-    resetBtn.addEventListener('click', function () {
-      form.reset();
-      nameInput.disabled = false;
-      nameInput.placeholder = 'Your name';
-      anonBtn.classList.remove('active');
-      document.getElementById('visit-date').value = today;
-      form.style.display = 'block';
-      successDiv.classList.remove('show');
-    });
+  const name = nameInput.value || "Anonymous";
 
-    
-form.addEventListener("submit", function() {
-  setTimeout(function() {
-    window.location.href = "thank-you.html";
-  }, 800);
+  const data = {
+    name: name,
+    visit_date: document.getElementById('visit-date').value,
+
+    staff_rating: document.querySelector('input[name="staff-rating"]:checked')?.value,
+    staff_comment: document.getElementById('staff-comment').value,
+
+    drinks_rating: document.querySelector('input[name="drinks-rating"]:checked')?.value,
+    drinks_ordered: document.getElementById('drinks-ordered').value,
+    drinks_comment: document.getElementById('drinks-comment').value,
+
+    ambience_rating: document.querySelector('input[name="ambience-rating"]:checked')?.value,
+    ambience_comment: document.getElementById('ambience-comment').value,
+
+    overall: document.getElementById('overall').value,
+    recommend: document.querySelector('input[name="would-recommend"]:checked')?.value
+  };
+
+  const { error } = await supabaseClient
+    .from("Tommyreviews")
+    .insert([data]);
+
+  if (error) {
+    alert("Error submitting");
+    console.log(error);
+  } else {
+    form.style.display = 'none';
+    successDiv.classList.add('show');
+  }
 });
+
+// RESET
+resetBtn.addEventListener('click', function () {
+  form.reset();
+  nameInput.disabled = false;
+  anonBtn.classList.remove('active');
+  document.getElementById('visit-date').value = today;
+  form.style.display = 'block';
+  successDiv.classList.remove('show');
+});
+ 
+
+  
 </script>
 
 </body>
