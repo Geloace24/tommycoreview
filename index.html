@@ -511,7 +511,7 @@
   "YOUR-ANON-KEY"
   );
 
-const form = document.getElementById('Tommyreviews');
+const form = document.getElementById('TommyRev');
 const nameInput = document.getElementById('name');
 const anonBtn = document.getElementById('anon-toggle');
 const successDiv = document.getElementById('success');
@@ -559,7 +559,7 @@ form.addEventListener('submit', async function (e) {
   };
 
   const { error } = await supabaseClient
-    .from("Tommyreviews")
+    .from("TommyRev")
     .insert([data]);
 
   if (error) {
