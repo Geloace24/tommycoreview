@@ -478,9 +478,9 @@
         <div class="field">
           <label>Would you recommend TommyCo to a friend?</label>
           <div class="recommend_group">
-            <label><input type="radio" name="would-recommend" value="Yes" /> Yes</label>
-            <label><input type="radio" name="would-recommend" value="Maybe" /> Maybe</label>
-            <label><input type="radio" name="would-recommend" value="No" /> No</label>
+            <label><input type="radio" name="would_recommend" value="Yes" /> Yes</label>
+            <label><input type="radio" name="would_recommend" value="Maybe" /> Maybe</label>
+            <label><input type="radio" name="would_recommend" value="No" /> No</label>
           </div>
         </div>
       </div>
@@ -519,7 +519,7 @@ const resetBtn = document.getElementById('reset-btn');
 
 // default date
 const today = new Date().toISOString().split('T')[0];
-document.getElementById('visit-date').value = today;
+document.getElementById('visit_date').value = today;
 
 // anonymous toggle
 anonBtn.addEventListener('click', function () {
@@ -545,7 +545,7 @@ form.addEventListener('submit', async function (e) {
     visit_date: document.getElementById('visit_date').value,
 
     staff_rating: document.querySelector('input[name="staff_rating"]:checked')?.value,
-    staff_comment: document.getElementById('staff-comment').value,
+    staff_comment: document.getElementById('staff_comment').value,
 
     drinks_rating: document.querySelector('input[name="drinks_rating"]:checked')?.value,
     drinks_ordered: document.getElementById('drinks_ordered').value,
@@ -555,7 +555,7 @@ form.addEventListener('submit', async function (e) {
     ambience_comment: document.getElementById('ambience_comment').value,
 
     overall: document.getElementById('overall').value,
-    recommend: document.querySelector('input[name="would-recommend"]:checked')?.value
+    recommend: document.querySelector('input[name="would_recommend"]:checked')?.value
   };
 
   console.log(data);
