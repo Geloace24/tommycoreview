@@ -394,7 +394,7 @@
       <!-- Your Name -->
       <div class="section-card">
         <h2>About You</h2>
-        <div class="name-group">
+        <div class="name_group">
           <div class="field">
             <label for="name">Name (optional)</label>
             <input type="text" id="name" name="name" placeholder="Your name" />
@@ -402,8 +402,8 @@
           <button type="button" class="anon-btn" id="anon-toggle">Anonymous</button>
         </div>
         <div class="field">
-          <label for="visit-date">Date of Visit</label>
-          <input type="date" id="visit-date" name="visit-date" />
+          <label for="visit_date">Date of Visit</label>
+          <input type="date" id="visit_date" name="visit_date" />
         </div>
       </div>
 
@@ -412,7 +412,7 @@
         <h2>Staff Service</h2>
         <div class="field">
           <label>How would you rate our staff?</label>
-          <div class="staff-rating">
+          <div class="staff_rating">
             <input type="radio" id="staff-5" name="staff-rating" value="5" /><label for="staff-5">&#9733;</label>
             <input type="radio" id="staff-4" name="staff-rating" value="4" /><label for="staff-4">&#9733;</label>
             <input type="radio" id="staff-3" name="staff-rating" value="3" /><label for="staff-3">&#9733;</label>
@@ -421,8 +421,8 @@
           </div>
         </div>
         <div class="field">
-          <label for="staff-comment">Tell us more about your experience with our staff</label>
-          <textarea id="staff-comment" name="staff-comment" placeholder="How did our staff treat you?"></textarea>
+          <label for="staff_comment">Tell us more about your experience with our staff</label>
+          <textarea id="staff_comment" name="staff_comment" placeholder="How did our staff treat you?"></textarea>
         </div>
       </div>
 
@@ -431,7 +431,7 @@
         <h2>Drinks</h2>
         <div class="field">
           <label>How would you rate our drinks?</label>
-          <div class="drinks-rating">
+          <div class="drinks_rating">
             <input type="radio" id="drinks-5" name="drinks-rating" value="5" /><label for="drinks-5">&#9733;</label>
             <input type="radio" id="drinks-4" name="drinks-rating" value="4" /><label for="drinks-4">&#9733;</label>
             <input type="radio" id="drinks-3" name="drinks-rating" value="3" /><label for="drinks-3">&#9733;</label>
@@ -440,12 +440,12 @@
           </div>
         </div>
         <div class="field">
-          <label for="drinks-ordered">What did you order?</label>
-          <input type="text" id="drinks-ordered" name="drinks-ordered" placeholder="e.g. Iced Latte, Cappuccino" />
+          <label for="drinks_ordered">What did you order?</label>
+          <input type="text" id="drinks_ordered" name="drinks_ordered" placeholder="e.g. Iced Latte, Cappuccino" />
         </div>
         <div class="field">
-          <label for="drinks-comment">Any comments about the drinks?</label>
-          <textarea id="drinks-comment" name="drinks-comment" placeholder="Share your thoughts on the taste, presentation, etc."></textarea>
+          <label for="drinks_comment">Any comments about the drinks?</label>
+          <textarea id="drinks_comment" name="drinks_comment" placeholder="Share your thoughts on the taste, presentation, etc."></textarea>
         </div>
       </div>
 
@@ -454,7 +454,7 @@
         <h2>Ambience</h2>
         <div class="field">
           <label>How would you rate the ambience?</label>
-          <div class="ambience-rating">
+          <div class="ambience_rating">
             <input type="radio" id="ambience-5" name="ambience-rating" value="5" /><label for="ambience-5">&#9733;</label>
             <input type="radio" id="ambience-4" name="ambience-rating" value="4" /><label for="ambience-4">&#9733;</label>
             <input type="radio" id="ambience-3" name="ambience-rating" value="3" /><label for="ambience-3">&#9733;</label>
@@ -463,8 +463,8 @@
           </div>
         </div>
         <div class="field">
-          <label for="ambience-comment">Any comments about the ambience?</label>
-          <textarea id="ambience-comment" name="ambience-comment" placeholder="Music, seating, cleanliness, vibe..."></textarea>
+          <label for="ambience_comment">Any comments about the ambience?</label>
+          <textarea id="ambience_comment" name="ambience_comment" placeholder="Music, seating, cleanliness, vibe..."></textarea>
         </div>
       </div>
 
@@ -477,7 +477,7 @@
         </div>
         <div class="field">
           <label>Would you recommend TommyCo to a friend?</label>
-          <div class="recommend-group">
+          <div class="recommend_group">
             <label><input type="radio" name="would-recommend" value="Yes" /> Yes</label>
             <label><input type="radio" name="would-recommend" value="Maybe" /> Maybe</label>
             <label><input type="radio" name="would-recommend" value="No" /> No</label>
@@ -548,11 +548,11 @@ form.addEventListener('submit', async function (e) {
     staff_comment: document.getElementById('staff-comment').value,
 
     drinks_rating: document.querySelector('input[name="drinks-rating"]:checked')?.value,
-    drinks_ordered: document.getElementById('drinks-ordered').value,
-    drinks_comment: document.getElementById('drinks-comment').value,
+    drinks_ordered: document.getElementById('drinks_ordered').value,
+    drinks_comment: document.getElementById('drinks_comment').value,
 
-    ambience_rating: document.querySelector('input[name="ambience-rating"]:checked')?.value,
-    ambience_comment: document.getElementById('ambience-comment').value,
+    ambience_rating: document.querySelector('input[name="ambience_rating"]:checked')?.value,
+    ambience_comment: document.getElementById('ambience_comment').value,
 
     overall: document.getElementById('overall').value,
     recommend: document.querySelector('input[name="would-recommend"]:checked')?.value
