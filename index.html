@@ -413,11 +413,11 @@
         <div class="field">
           <label>How would you rate our staff?</label>
           <div class="staff_rating">
-            <input type="radio" id="staff-5" name="staff-rating" value="5" /><label for="staff-5">&#9733;</label>
-            <input type="radio" id="staff-4" name="staff-rating" value="4" /><label for="staff-4">&#9733;</label>
-            <input type="radio" id="staff-3" name="staff-rating" value="3" /><label for="staff-3">&#9733;</label>
-            <input type="radio" id="staff-2" name="staff-rating" value="2" /><label for="staff-2">&#9733;</label>
-            <input type="radio" id="staff-1" name="staff-rating" value="1" /><label for="staff-1">&#9733;</label>
+            <input type="radio" id="staff-5" name="staff_rating" value="5" /><label for="staff-5">&#9733;</label>
+            <input type="radio" id="staff-4" name="staff_rating" value="4" /><label for="staff-4">&#9733;</label>
+            <input type="radio" id="staff-3" name="staff_rating" value="3" /><label for="staff-3">&#9733;</label>
+            <input type="radio" id="staff-2" name="staff_rating" value="2" /><label for="staff-2">&#9733;</label>
+            <input type="radio" id="staff-1" name="staff_rating" value="1" /><label for="staff-1">&#9733;</label>
           </div>
         </div>
         <div class="field">
@@ -432,11 +432,11 @@
         <div class="field">
           <label>How would you rate our drinks?</label>
           <div class="drinks_rating">
-            <input type="radio" id="drinks-5" name="drinks-rating" value="5" /><label for="drinks-5">&#9733;</label>
-            <input type="radio" id="drinks-4" name="drinks-rating" value="4" /><label for="drinks-4">&#9733;</label>
-            <input type="radio" id="drinks-3" name="drinks-rating" value="3" /><label for="drinks-3">&#9733;</label>
-            <input type="radio" id="drinks-2" name="drinks-rating" value="2" /><label for="drinks-2">&#9733;</label>
-            <input type="radio" id="drinks-1" name="drinks-rating" value="1" /><label for="drinks-1">&#9733;</label>
+            <input type="radio" id="drinks-5" name="drinks_rating" value="5" /><label for="drinks-5">&#9733;</label>
+            <input type="radio" id="drinks-4" name="drinks_rating" value="4" /><label for="drinks-4">&#9733;</label>
+            <input type="radio" id="drinks-3" name="drinks_rating" value="3" /><label for="drinks-3">&#9733;</label>
+            <input type="radio" id="drinks-2" name="drinks_rating" value="2" /><label for="drinks-2">&#9733;</label>
+            <input type="radio" id="drinks-1" name="drinks_rating" value="1" /><label for="drinks-1">&#9733;</label>
           </div>
         </div>
         <div class="field">
@@ -455,11 +455,11 @@
         <div class="field">
           <label>How would you rate the ambience?</label>
           <div class="ambience_rating">
-            <input type="radio" id="ambience-5" name="ambience-rating" value="5" /><label for="ambience-5">&#9733;</label>
-            <input type="radio" id="ambience-4" name="ambience-rating" value="4" /><label for="ambience-4">&#9733;</label>
-            <input type="radio" id="ambience-3" name="ambience-rating" value="3" /><label for="ambience-3">&#9733;</label>
-            <input type="radio" id="ambience-2" name="ambience-rating" value="2" /><label for="ambience-2">&#9733;</label>
-            <input type="radio" id="ambience-1" name="ambience-rating" value="1" /><label for="ambience-1">&#9733;</label>
+            <input type="radio" id="ambience-5" name="ambience_rating" value="5" /><label for="ambience-5">&#9733;</label>
+            <input type="radio" id="ambience-4" name="ambience_rating" value="4" /><label for="ambience-4">&#9733;</label>
+            <input type="radio" id="ambience-3" name="ambience_rating" value="3" /><label for="ambience-3">&#9733;</label>
+            <input type="radio" id="ambience-2" name="ambience_rating" value="2" /><label for="ambience-2">&#9733;</label>
+            <input type="radio" id="ambience-1" name="ambience_rating" value="1" /><label for="ambience-1">&#9733;</label>
           </div>
         </div>
         <div class="field">
@@ -542,12 +542,12 @@ form.addEventListener('submit', async function (e) {
 
   const data = {
     name: name,
-    visit_date: document.getElementById('visit-date').value,
+    visit_date: document.getElementById('visit_date').value,
 
-    staff_rating: document.querySelector('input[name="staff-rating"]:checked')?.value,
+    staff_rating: document.querySelector('input[name="staff_rating"]:checked')?.value,
     staff_comment: document.getElementById('staff-comment').value,
 
-    drinks_rating: document.querySelector('input[name="drinks-rating"]:checked')?.value,
+    drinks_rating: document.querySelector('input[name="drinks_rating"]:checked')?.value,
     drinks_ordered: document.getElementById('drinks_ordered').value,
     drinks_comment: document.getElementById('drinks_comment').value,
 
@@ -557,6 +557,8 @@ form.addEventListener('submit', async function (e) {
     overall: document.getElementById('overall').value,
     recommend: document.querySelector('input[name="would-recommend"]:checked')?.value
   };
+
+  console.log(data);
 
   const { data: result, error } = await supabaseClient
   .from("TommyRev")
