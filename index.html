@@ -558,9 +558,10 @@ form.addEventListener('submit', async function (e) {
     recommend: document.querySelector('input[name="would-recommend"]:checked')?.value
   };
 
-  const { error } = await supabaseClient
-    .from("TommyRev")
-    .insert([data]);
+  const { data: result, error } = await supabaseClient
+  .from("TommyRev")
+  .insert([data])
+  .select();
 
   if (error) {
     alert("Error submitting");
