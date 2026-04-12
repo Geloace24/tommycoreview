@@ -555,7 +555,7 @@ form.addEventListener('submit', async function (e) {
     ambience_comment: document.getElementById('ambience_comment').value,
 
     overall: document.getElementById('overall').value,
-    recommend: document.querySelector('input[name="would_recommend"]:checked')?.value
+    recommend_group: document.querySelector('input[name="would_recommend"]:checked')?.value
   };
 
   console.log(data);
@@ -565,13 +565,13 @@ form.addEventListener('submit', async function (e) {
   .insert([data])
   .select();
 
-  if (error) {
-    alert("Error submitting");
-    console.log(error);
-  } else {
-    form.style.display = 'none';
-    successDiv.classList.add('show');
-  }
+ if (error) {
+  alert("Error submitting");
+  console.log(error);
+} else {
+  window.location.href = "thank-you.html"; 
+}
+
 });
 
 // RESET
@@ -579,7 +579,7 @@ resetBtn.addEventListener('click', function () {
   form.reset();
   nameInput.disabled = false;
   anonBtn.classList.remove('active');
-  document.getElementById('visit-date').value = today;
+  document.getElementById('visit_date').value = today;
   form.style.display = 'block';
   successDiv.classList.remove('show');
 });
