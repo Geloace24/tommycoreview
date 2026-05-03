@@ -299,7 +299,7 @@
             <div class="points-bar-fill" id="points-bar" style="width: 0%"></div>
           </div>
           <div style="font-size:0.75rem; color:#7d5133; margin-top:0.4rem;">
-            🍪 Earn 5 points to get a free cookie!
+            🍪 Earn 3 points to get a free cookie!
           </div>
         </div>
       </div>
@@ -312,7 +312,7 @@
       </div>
 
       <div id="cooldown-notice">
-        ⏰ You already left a review in the last 24 hours. Come back tomorrow to earn another point!
+        ⏰ You already left a review in the last 8 hours. Come back tomorrow to earn another point!
       </div>
     </div>
 
@@ -514,7 +514,7 @@
         const now = new Date();
         const hoursSince = (now - lastReview) / (1000 * 60 * 60);
 
-        if (hoursSince < 24) {
+        if (hoursSince < 8){
           document.getElementById('cooldown-notice').style.display = 'block';
           document.getElementById('submit-btn').disabled = true;
         }
