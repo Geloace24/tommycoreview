@@ -523,9 +523,9 @@
 
     function updatePointsUI(points) {
       document.getElementById('points-num').textContent = points;
-      document.getElementById('points-bar').style.width = (points / 5 * 100) + '%';
+      document.getElementById('points-bar').style.width = (points / 3 * 100) + '%';
 
-      if (points >= 5) {
+      if (points >= 3) {
         document.getElementById('points-progress-card').style.display = 'none';
         document.getElementById('redeem-card').style.display = 'block';
         document.getElementById('submit-btn').disabled = true;
