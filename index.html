@@ -294,7 +294,7 @@
         <div class="points-icon">⭐</div>
         <div class="points-info">
           <div class="points-label">YOUR LOYALTY POINTS</div>
-          <div class="points-count"><span id="points-num">0</span> / 5 points</div>
+          <div class="points-count"><span id="points-num">0</span> / 3 points</div>
           <div class="points-bar-wrap">
             <div class="points-bar-fill" id="points-bar" style="width: 0%"></div>
           </div>
@@ -621,7 +621,7 @@
         .eq('id', currentUser.id)
         .single();
 
-      const newPoints = Math.min((profile?.points || 0) + 1, 5);
+      const newPoints = Math.min((profile?.points || 0) + 1, 3);
 
       await supabaseClient
         .from('profiles')
