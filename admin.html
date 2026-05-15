@@ -345,11 +345,11 @@
     }
 
     async function loadPendingReviews() {
-      const { data: pending } = await supabaseClient
-        .from('pending_reviews')
-        .select('*, TommyRev(name, visit_date, drinks_ordered, staff_rating, drinks_rating, ambience_rating)')
-        .eq('status', 'pending')
-        .order('submitted_at', { ascending: false });
+    const { data: pending } = await supabaseClient
+  .from('pending_reviews')
+  .select('*')
+  .eq('status', 'pending')
+  .order('submitted_at', { ascending: false }); 
 
       const list = document.getElementById('pending-list');
       const count = document.getElementById('pending-count');
@@ -371,10 +371,8 @@
           <img src="${r.photo_url}" class="review-photo" alt="Order photo"
             onclick="window.open('${r.photo_url}', '_blank')" />
           <div class="review-details">
-            ${r.TommyRev?.drinks_ordered ? `<span>🥤 ${r.TommyRev.drinks_ordered}</span>` : ''}
-            ${r.TommyRev?.staff_rating ? `<span>👤 Staff: ${r.TommyRev.staff_rating}★</span>` : ''}
-            ${r.TommyRev?.drinks_rating ? `<span>☕ Drinks: ${r.TommyRev.drinks_rating}★</span>` : ''}
-            ${r.TommyRev?.ambience_rating ? `<span>🎵 Ambience: ${r.TommyRev.ambience_rating}★</span>` : ''}
+            <span>📅 ${new Date(r.submitted_at).toLocaleString()}</span>
+            <span>👤 User: ${r.user_id.substring(0, 8)}...</span>
           </div>
           <div class="review-actions">
             <button class="approve-btn" onclick="approveReview('${r.id}', '${r.user_id}')">✅ Approve (+1 point)</button>
