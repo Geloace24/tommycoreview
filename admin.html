@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TommyCo Admin</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5e6d3;
+      color: #4a3728;
+      min-height: 100vh;
+    }
+
+    /* ── LOGIN SCREEN ── */
+    #login-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    #login-screen img {
+      width: 90px;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      margin-bottom: 1.5rem;
+    }
+
+    .login-card {
+      background: #fff8f0;
+      border-radius: 16px;
+      padding: 2rem 1.8rem;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      text-align: center;
+    }
+
+    .login-card h2 { color: #6b4226; font-size: 1.3rem; margin-bottom: 0.3rem; }
+    .login-card p { font-size: 0.85rem; color: #7d5133; margin-bottom: 1.5rem; }
+
+    .login-field { margin-bottom: 1rem; text-align: left; }
+    .login-field label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 0.35rem; }
+    .login-field input {
+      width: 100%; padding: 0.65rem 0.8rem;
+      border: 1px solid #d4c4b0; border-radius: 8px;
+      font-size: 0.95rem; font-family: inherit;
+      background: #fffdf9; color: #4a3728;
+    }
+    .login-field input:focus { outline: none; border-color: #6b4226; }
+
+    .login-btn {
+      width: 100%; padding: 0.8rem; background: #6b4226;
+      color: #f5e6d3; border: none; border-radius: 8px;
+      font-size: 1rem; font-weight: 700; cursor: pointer;
+      transition: background 0.2s; margin-top: 0.5rem;
+    }
+    .login-btn:hover { background: #7d5133; }
+
+    .login-message { margin-top: 0.8rem; font-size: 0.85rem; color: #c0392b; min-height: 1.2rem; }
+
+    /* ── ADMIN SCREEN ── */
+    #admin-screen { display: none; }
+
+    .admin-header {
+      background: #6b4226; color: #f5e6d3;
+      padding: 1.2rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .admin-header h1 { font-size: 1.4rem; letter-spacing: 1px; }
+    .admin-header span { font-size: 0.85rem; opacity: 0.85; }
+
+    .admin-logout {
+      background: transparent; border: 1px solid rgba(245,230,211,0.6);
+      color: #f5e6d3; padding: 0.4rem 0.9rem; border-radius: 20px;
+      font-size: 0.8rem; cursor: pointer;
+    }
+    .admin-logout:hover { background: rgba(255,255,255,0.15); }
+
+    .admin-content { max-width: 900px; margin: 0 auto; padding: 2rem 1.2rem; }
+
+    .admin-tabs {
+      display: flex; gap: 0.5rem; margin-bottom: 1.5rem;
+    }
+
+    .admin-tab {
+      padding: 0.5rem 1.2rem; border-radius: 8px;
+      border: 2px solid #6b4226; background: transparent;
+      color: #6b4226; font-weight: 700; font-size: 0.85rem;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .admin-tab.active { background: #6b4226; color: #f5e6d3; }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* Pending reviews */
+    .review-card {
+      background: #fff8f0;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 8px rgba(107,66,38,0.08);
+    }
+
+    .review-card-header {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; margin-bottom: 1rem;
+      flex-wrap: wrap; gap: 0.5rem;
+    }
+
+    .review-card-header .user-info { font-size: 0.85rem; color: #7d5133; }
+    .review-card-header .user-info strong { color: #4a3728; font-size: 0.95rem; display: block; }
+
+    .review-photo {
+      width: 100%; max-height: 220px;
+      object-fit: cover; border-radius: 8px;
+      margin-bottom: 1rem; cursor: pointer;
+    }
+
+    .review-details { font-size: 0.85rem; color: #7d5133; margin-bottom: 1rem; line-height: 1.6; }
+    .review-details span { display: inline-block; margin-right: 1rem; }
+
+    .review-actions { display: flex; gap: 0.75rem; }
+
+    .approve-btn {
+      flex: 1; padding: 0.65rem; background: #27ae60;
+      color: white; border: none; border-radius: 8px;
+      font-weight: 700; font-size: 0.9rem; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .approve-btn:hover { background: #219a52; }
+
+    .reject-btn {
+      flex: 1; padding: 0.65rem; background: #c0392b;
+      color: white; border: none; border-radius: 8px;
+      font-weight: 700; font-size: 0.9rem; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .reject-btn:hover { background: #a93226; }
+
+    .empty-state {
+      text-align: center; padding: 3rem 1rem;
+      color: #7d5133; font-size: 0.95rem; opacity: 0.7;
+    }
+    .empty-state div { font-size: 2.5rem; margin-bottom: 0.5rem; }
+
+    /* Users table */
+    .users-table {
+      width: 100%; border-collapse: collapse;
+      background: #fff8f0; border-radius: 12px; overflow: hidden;
+      box-shadow: 0 2px 8px rgba(107,66,38,0.08);
+    }
+
+    .users-table th {
+      background: #6b4226; color: #f5e6d3;
+      padding: 0.75rem 1rem; text-align: left; font-size: 0.85rem;
+    }
+
+    .users-table td {
+      padding: 0.75rem 1rem; font-size: 0.85rem;
+      border-bottom: 1px solid #e8d5c0; color: #4a3728;
+    }
+
+    .users-table tr:last-child td { border-bottom: none; }
+    .users-table tr:hover td { background: #fef9f4; }
+
+    .points-badge {
+      background: #6b4226; color: #f5e6d3;
+      padding: 0.2rem 0.6rem; border-radius: 20px;
+      font-size: 0.8rem; font-weight: 700;
+    }
+
+    .status-pending { color: #856404; font-weight: 600; }
+    .status-approved { color: #27ae60; font-weight: 600; }
+    .status-rejected { color: #c0392b; font-weight: 600; }
+
+    .section-title {
+      font-size: 1.1rem; font-weight: 700; color: #6b4226;
+      margin-bottom: 1rem;
+    }
+
+    .badge-count {
+      background: #c0392b; color: white;
+      border-radius: 50%; width: 20px; height: 20px;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; font-weight: 700; margin-left: 0.4rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN SCREEN -->
+  <div id="login-screen">
+    <img src="coffee-bg.jpg.jpg" alt="TommyCo Logo" />
+    <div class="login-card">
+      <h2>Admin Panel</h2>
+      <p>TommyCo staff only</p>
+      <div class="login-field">
+        <label>Email</label>
+        <input type="email" id="admin-email" placeholder="your@email.com" />
+      </div>
+      <div class="login-field">
+        <label>Password</label>
+        <input type="password" id="admin-password" placeholder="••••••••" />
+      </div>
+      <button class="login-btn" onclick="adminLogin()">Log In</button>
+      <p class="login-message" id="login-message"></p>
+    </div>
+  </div>
+
+  <!-- ADMIN SCREEN -->
+  <div id="admin-screen">
+    <div class="admin-header">
+      <div>
+        <h1>TommyCo Admin</h1>
+        <span id="admin-email-display"></span>
+      </div>
+      <button class="admin-logout" onclick="adminLogout()">Log Out</button>
+    </div>
+
+    <div class="admin-content">
+      <div class="admin-tabs">
+        <button class="admin-tab active" onclick="switchAdminTab('pending')">
+          Pending Reviews <span class="badge-count" id="pending-count">0</span>
+        </button>
+        <button class="admin-tab" onclick="switchAdminTab('users')">Users & Points</button>
+        <button class="admin-tab" onclick="switchAdminTab('redemptions')">Redemptions</button>
+      </div>
+
+      <!-- Pending Reviews Tab -->
+      <div class="tab-content active" id="tab-pending">
+        <div class="section-title">Pending Reviews</div>
+        <div id="pending-list"></div>
+      </div>
+
+      <!-- Users Tab -->
+      <div class="tab-content" id="tab-users">
+        <div class="section-title">All Users & Points</div>
+        <table class="users-table">
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Points</th>
+              <th>Last Review</th>
+            </tr>
+          </thead>
+          <tbody id="users-list"></tbody>
+        </table>
+      </div>
+
+      <!-- Redemptions Tab -->
+      <div class="tab-content" id="tab-redemptions">
+        <div class="section-title">Redemption History</div>
+        <table class="users-table">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Reward</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="redemptions-list"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script>
+    const supabaseClient = supabase.createClient(
+      "https://cjylqadgpvaqsupuhpmw.supabase.co",
+      "sb_publishable_lfZcEvPxxwZAudioOD8ISQ_-ID66HYi"
+    );
+
+    const ADMIN_EMAIL = "darwinevangelista30@gmail.com";
+
+    let adminUser = null;
+
+    window.addEventListener('DOMContentLoaded', async () => {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (session && session.user.email === ADMIN_EMAIL) {
+        adminUser = session.user;
+        showAdminScreen(session.user.email);
+        loadAllData();
+      }
+    });
+
+    async function adminLogin() {
+      const email = document.getElementById('admin-email').value.trim();
+      const password = document.getElementById('admin-password').value;
+      const msgEl = document.getElementById('login-message');
+      msgEl.textContent = '';
+
+      // Block anyone who isn't the admin email
+      if (email !== ADMIN_EMAIL) {
+        msgEl.textContent = 'Access denied.';
+        return;
+      }
+
+      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+      if (error) {
+        msgEl.textContent = 'Login failed: ' + error.message;
+      } else {
+        adminUser = data.user;
+        showAdminScreen(data.user.email);
+        loadAllData();
+      }
+    }
+
+    function showAdminScreen(email) {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('admin-screen').style.display = 'block';
+      document.getElementById('admin-email-display').textContent = email;
+    }
+
+    async function adminLogout() {
+      await supabaseClient.auth.signOut();
+      adminUser = null;
+      document.getElementById('admin-screen').style.display = 'none';
+      document.getElementById('login-screen').style.display = 'flex';
+      document.getElementById('admin-email').value = '';
+      document.getElementById('admin-password').value = '';
+    }
+
+    function switchAdminTab(tab) {
+      document.querySelectorAll('.admin-tab').forEach((t, i) => {
+        t.classList.toggle('active', ['pending','users','redemptions'][i] === tab);
+      });
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      document.getElementById('tab-' + tab).classList.add('active');
+    }
+
+    async function loadAllData() {
+      await loadPendingReviews();
+      await loadUsers();
+      await loadRedemptions();
+    }
+
+    async function loadPendingReviews() {
+      const { data: pending } = await supabaseClient
+        .from('pending_reviews')
+        .select('*, TommyRev(name, visit_date, drinks_ordered, staff_rating, drinks_rating, ambience_rating)')
+        .eq('status', 'pending')
+        .order('submitted_at', { ascending: false });
+
+      const list = document.getElementById('pending-list');
+      const count = document.getElementById('pending-count');
+      count.textContent = pending?.length || 0;
+
+      if (!pending || pending.length === 0) {
+        list.innerHTML = '<div class="empty-state"><div>✅</div>No pending reviews!</div>';
+        return;
+      }
+
+      list.innerHTML = pending.map(r => `
+        <div class="review-card" id="card-${r.id}">
+          <div class="review-card-header">
+            <div class="user-info">
+              <strong>${r.TommyRev?.name || 'Anonymous'}</strong>
+              ${r.TommyRev?.visit_date || ''} · Submitted ${new Date(r.submitted_at).toLocaleString()}
+            </div>
+          </div>
+          <img src="${r.photo_url}" class="review-photo" alt="Order photo"
+            onclick="window.open('${r.photo_url}', '_blank')" />
+          <div class="review-details">
+            ${r.TommyRev?.drinks_ordered ? `<span>🥤 ${r.TommyRev.drinks_ordered}</span>` : ''}
+            ${r.TommyRev?.staff_rating ? `<span>👤 Staff: ${r.TommyRev.staff_rating}★</span>` : ''}
+            ${r.TommyRev?.drinks_rating ? `<span>☕ Drinks: ${r.TommyRev.drinks_rating}★</span>` : ''}
+            ${r.TommyRev?.ambience_rating ? `<span>🎵 Ambience: ${r.TommyRev.ambience_rating}★</span>` : ''}
+          </div>
+          <div class="review-actions">
+            <button class="approve-btn" onclick="approveReview('${r.id}', '${r.user_id}')">✅ Approve (+1 point)</button>
+            <button class="reject-btn" onclick="rejectReview('${r.id}')">❌ Reject</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function approveReview(pendingId, userId) {
+      // Get current points
+      const { data: profile } = await supabaseClient
+        .from('profiles')
+        .select('points')
+        .eq('id', userId)
+        .single();
+
+      const newPoints = (profile?.points || 0) + 1;
+
+      // Add 1 point
+      await supabaseClient
+        .from('profiles')
+        .update({ points: newPoints })
+        .eq('id', userId);
+
+      // Mark as approved
+      await supabaseClient
+        .from('pending_reviews')
+        .update({ status: 'approved' })
+        .eq('id', pendingId);
+
+      // Remove card from UI
+      document.getElementById('card-' + pendingId)?.remove();
+
+      // Update count
+      const count = document.getElementById('pending-count');
+      count.textContent = Math.max(0, parseInt(count.textContent) - 1);
+
+      // Check if list is now empty
+      const list = document.getElementById('pending-list');
+      if (!list.querySelector('.review-card')) {
+        list.innerHTML = '<div class="empty-state"><div>✅</div>No pending reviews!</div>';
+      }
+
+      // Refresh users table
+      await loadUsers();
+    }
+
+    async function rejectReview(pendingId) {
+      await supabaseClient
+        .from('pending_reviews')
+        .update({ status: 'rejected' })
+        .eq('id', pendingId);
+
+      document.getElementById('card-' + pendingId)?.remove();
+
+      const count = document.getElementById('pending-count');
+      count.textContent = Math.max(0, parseInt(count.textContent) - 1);
+
+      const list = document.getElementById('pending-list');
+      if (!list.querySelector('.review-card')) {
+        list.innerHTML = '<div class="empty-state"><div>✅</div>No pending reviews!</div>';
+      }
+    }
+
+    async function loadUsers() {
+      const { data: profiles } = await supabaseClient
+        .from('profiles')
+        .select('id, points, last_review_at')
+        .order('points', { ascending: false });
+
+      const { data: users } = await supabaseClient.auth.admin?.listUsers?.() || { data: null };
+
+      const tbody = document.getElementById('users-list');
+      if (!profiles || profiles.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;opacity:0.6;">No users yet</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = profiles.map(p => `
+        <tr>
+          <td>${p.id.substring(0, 8)}...</td>
+          <td><span class="points-badge">${p.points || 0} pts</span></td>
+          <td>${p.last_review_at ? new Date(p.last_review_at).toLocaleDateString() : 'Never'}</td>
+        </tr>
+      `).join('');
+    }
+
+    async function loadRedemptions() {
+      const { data: redemptions } = await supabaseClient
+        .from('redemptions')
+        .select('*')
+        .order('redeemed_at', { ascending: false });
+
+      const tbody = document.getElementById('redemptions-list');
+      if (!redemptions || redemptions.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;opacity:0.6;">No redemptions yet</td></tr>';
+        return;
+      }
+
+      const emojis = { cookie: '🍪', mocktail: '🧃', coffee: '☕' };
+
+      tbody.innerHTML = redemptions.map(r => `
+        <tr>
+          <td>${r.user_id.substring(0, 8)}...</td>
+          <td>${emojis[r.reward_type] || '🎁'} ${r.reward_type || 'cookie'}</td>
+          <td>${new Date(r.redeemed_at).toLocaleDateString()}</td>
+        </tr>
+      `).join('');
+    }
+  </script>
+</body>
+</html>
